@@ -26,7 +26,7 @@ export default function Index() {
       }}
     >
       
-      <Text style={{ fontFamily: 'Rubik-Regular', fontSize: 24}}>Welcome to Real Estate</Text> 
+      <Text style={{ fontFamily: 'Rubik-Regular', fontSize: 24 }}>Welcome to Real Estate</Text> 
       <Link href='/sign-in'>Sign In</Link>
       <Link href='/explore'>Explore</Link>
       <Link href='/profile'>Profile</Link>
