@@ -1,14 +1,28 @@
 import { useFonts } from "expo-font";
 import React from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { login } from '../lib/appwrite';
+import { useGlobalContext } from '../lib/global-provider';
 
+import { Redirect } from "expo-router";
 import icons from '../constants/icons';
 import images from '../constants/images';
 
 const SignIn = () => {
+    const { refetch, loading, isLogged } = useGlobalContext()
 
-    const handleLogin = () => {}
+    if (!loading && isLogged) return <Redirect href='/' />
+
+    const handleLogin = async () => {
+        const result = await login()
+
+        if(result){
+            refetch()
+        }else{
+            Alert.alert("Error", "Failed to login")
+        }
+    }
 
     const [fontsLoaded] = useFonts({
         "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
