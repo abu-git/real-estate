@@ -11,7 +11,7 @@ export const config = {
 
 export const client = new Client()
 
-client.setEndpoint(config.endpoint!).setProject(config.projectId!).setPlatform(config.platform!)
+client.setEndpoint(config.endpoint!).setProject(config.projectId!).setPlatform(config.platform)
 
 
 export const avatar = new Avatars(client)
@@ -23,7 +23,7 @@ export async function login(){
     try{
         const redirectUri = Linking.createURL("/")
 
-        const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri)
+        const response = await account.createOAuth2Token({ provider: OAuthProvider.Google, success:redirectUri })
         if (!response) throw new Error("Create OAuth2 token failed")
         
         const browserResult = await openAuthSessionAsync(response.toString(), redirectUri)
@@ -34,7 +34,7 @@ export async function login(){
         const userId = url.searchParams.get("userId")?.toString()
         if (!secret || !userId) throw new Error("Create OAuth2 token failed")
     
-        const session = await account.createSession(userId, secret)
+        const session = await account.createSession({userId: userId, secret: secret})
         if (!session) throw new Error("Failed to create session")
         
         return true
@@ -46,7 +46,8 @@ export async function login(){
 
 export async function logout(){
     try{
-        const result = await account.deleteSession('current')
+        const result = await account.deleteSession({ sessionId: 'current'})
+        return result
     }catch(error){
         console.error(error)
         return false
@@ -56,8 +57,9 @@ export async function logout(){
 export async function getCurrentUser() {
     try{
         const result = await account.get()
+        console.log(result)
         if(result.$id){
-            const userAvatar = avatar.getInitials(result.name)
+            const userAvatar = avatar.getInitials({name: result.name, width: 0, height: 0})
 
             return { ...result, avatar: userAvatar.toString() }
         }
