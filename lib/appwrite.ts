@@ -9,9 +9,7 @@ export const config = {
 }
 
 
-export const client = new Client()
-
-client.setEndpoint(config.endpoint!).setProject(config.projectId!).setPlatform(config.platform)
+export const client = new Client().setEndpoint(config.endpoint!).setProject(config.projectId!)//.setPlatform(config.platform)
 
 
 export const avatar = new Avatars(client)
@@ -57,11 +55,11 @@ export async function logout(){
 export async function getCurrentUser() {
     try{
         const result = await account.get()
-        console.log(result)
+        console.log(result.name)
         if(result.$id){
-            const userAvatar = avatar.getInitials({name: result.name, width: 0, height: 0})
-
-            return { ...result, avatar: userAvatar.toString() }
+            let userAvatar = avatar.getInitials({name: result.name})
+            console.log('user avatar: ',JSON.stringify(userAvatar, null, 2))
+            return { ...result, avatar: userAvatar }
         }
         return null
     }catch(error){

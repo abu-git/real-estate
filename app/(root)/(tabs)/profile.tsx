@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { settings } from "@/constants/data"
 import icons from '@/constants/icons'
+import images from "@/constants/images"
 
 interface SettingsItemProp {
   icon: ImageSourcePropType;
@@ -34,7 +35,7 @@ const SettingsItem = ({ icon, title, onPress, textStyle, showArrow = true }: Set
 
 const Profile = () => {
   const { user, refetch } = useGlobalContext()
-  console.table(user?.avatar)
+  //console.table(user?.avatar)
   
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../../../assets/fonts/Rubik-Bold.ttf"),
@@ -73,7 +74,7 @@ const Profile = () => {
         <View className="flex flex-row justify-center mt-5">
           <View className="flex flex-col items-center relative mt-5">
             <Image
-              source={{ uri: user?.avatar}}
+              source={images.avatar}
               className="size-44 relative rounded-full"
             />
             <TouchableOpacity className="absolute bottom-11 right-2">
