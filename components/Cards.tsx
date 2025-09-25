@@ -17,10 +17,10 @@ export const FeaturedCard = ({ onPress }: Props) => {
         "Rubik-Medium": require("../assets/fonts/Rubik-Medium.ttf"),
         "Rubik-Regular": require("../assets/fonts/Rubik-Regular.ttf"),
         "Rubik-SemiBold": require("../assets/fonts/Rubik-SemiBold.ttf"),
-    });
+    })
     
     if (!fontsLoaded) {
-        return null;
+        return null
     }
 
     return(
