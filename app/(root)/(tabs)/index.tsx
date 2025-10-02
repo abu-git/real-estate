@@ -3,6 +3,7 @@ import Filters from "@/components/Filters";
 import Search from "@/components/Search";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
+import { useGlobalContext } from "@/lib/global-provider";
 import { useFonts } from "expo-font";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,6 +22,8 @@ export default function Index() {
   if (!fontsLoaded) {
     return null;
   }
+
+  const { user } = useGlobalContext()
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -45,7 +48,7 @@ export default function Index() {
                     Good Morning
                   </Text>
                   <Text style={{ fontFamily: 'Rubik-Medium', fontSize: 15 }} className="text-base font-rubik-medium text-black-300">
-                    Sam
+                    {user?.name}
                   </Text>
                 </View>
               </View>
