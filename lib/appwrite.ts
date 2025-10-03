@@ -1,6 +1,6 @@
 import * as Linking from 'expo-linking'
 import { openAuthSessionAsync } from 'expo-web-browser'
-import { Account, Avatars, Client, Databases, OAuthProvider } from 'react-native-appwrite'
+import { Account, Avatars, Client, Databases, OAuthProvider, Query } from 'react-native-appwrite'
 
 export const config = {
     platform: 'com.sam.realestate',
@@ -72,5 +72,20 @@ export async function getCurrentUser() {
     }catch(error){
         console.error(error)
         return null
+    }
+}
+
+export async function getLatestProperties(){
+    try {
+        const result = await databases.listDocuments({
+            databaseId: config.databaseId!,
+            collectionId: config.propertiesCollectionId!,
+            queries: [Query.orderAsc("$createdAt"), Query.limit(5)]
+        })
+
+        return result.documents
+    } catch (error) {
+        console.error(error)
+        return []
     }
 }
