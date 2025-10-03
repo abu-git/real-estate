@@ -121,3 +121,19 @@ export async function getProperties({ filter, query, limit }: { filter: string; 
         return []
     }
 }
+
+// get property by id
+export async function getPropertyById({ id }: { id: string }) {
+    try{
+        const result = await databases.getDocument({
+            databaseId: config.databaseId!,
+            collectionId: config.propertiesCollectionId!,
+            documentId: id
+        })
+
+        return result
+    }catch(error){
+        console.error(error)
+        return null
+    }
+}
